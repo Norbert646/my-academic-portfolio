@@ -4,7 +4,10 @@ import { academicJourney } from "../data/academicJourney";
 
 export default function AcademicJourney() {
   return (
-    <section id="journey" className="relative py-24 md:py-32 bg-offwhite overflow-hidden">
+    <section
+      id="journey"
+      className="relative py-24 md:py-32 bg-offwhite overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <SectionHeading
           eyebrow="Academic Journey"

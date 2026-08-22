@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { Factory, ShieldCheck, ClipboardList } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { industrialExperience, hseTraining } from "../data/industrialExperience";
+import {
+  industrialExperience,
+  hseTraining,
+} from "../data/industrialExperience";
 
 export default function IndustrialExperience() {
   return (
@@ -31,7 +34,8 @@ export default function IndustrialExperience() {
                   {industrialExperience.organization}
                 </h3>
                 <p className="text-xs text-gold-light">
-                  {industrialExperience.role} &middot; {industrialExperience.location}
+                  {industrialExperience.role} &middot;{" "}
+                  {industrialExperience.location}
                 </p>
               </div>
             </div>
@@ -40,8 +44,14 @@ export default function IndustrialExperience() {
             </p>
             <ul className="mt-6 space-y-3">
               {industrialExperience.points.map((point) => (
-                <li key={point} className="flex items-start gap-3 text-sm text-graycool-light">
-                  <ClipboardList size={15} className="text-teal-light mt-0.5 shrink-0" />
+                <li
+                  key={point}
+                  className="flex items-start gap-3 text-sm text-graycool-light"
+                >
+                  <ClipboardList
+                    size={15}
+                    className="text-teal-light mt-0.5 shrink-0"
+                  />
                   {point}
                 </li>
               ))}
@@ -72,7 +82,10 @@ export default function IndustrialExperience() {
             </p>
             <ul className="space-y-2.5">
               {hseTraining.topics.map((topic) => (
-                <li key={topic} className="flex items-start gap-2.5 text-sm text-graycool-light">
+                <li
+                  key={topic}
+                  className="flex items-start gap-2.5 text-sm text-graycool-light"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-gold mt-1.5 shrink-0" />
                   {topic}
                 </li>

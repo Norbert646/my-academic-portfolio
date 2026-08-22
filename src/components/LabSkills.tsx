@@ -4,7 +4,12 @@ import SectionHeading from "./SectionHeading";
 import { labSkillGroups } from "../data/labSkills";
 import { courses } from "../data/courses";
 
-const icons = { beaker: Beaker, layers: Layers, shield: Shield, laptop: Laptop };
+const icons = {
+  beaker: Beaker,
+  layers: Layers,
+  shield: Shield,
+  laptop: Laptop,
+};
 
 export default function LabSkills() {
   return (
@@ -34,7 +39,10 @@ export default function LabSkills() {
                 </h3>
                 <ul className="space-y-2 mb-4">
                   {g.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-graycool">
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-sm text-graycool"
+                    >
                       <Check size={14} className="text-teal mt-0.5 shrink-0" />
                       {item}
                     </li>
@@ -59,8 +67,8 @@ export default function LabSkills() {
             Courses & Training
           </h3>
           <p className="text-graycool-light text-sm mb-8 max-w-xl">
-            Core coursework forming the academic basis of my chemistry
-            education to date.
+            Core coursework forming the academic basis of my chemistry education
+            to date.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
             {courses.map((c) => (

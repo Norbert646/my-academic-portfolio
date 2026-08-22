@@ -1,18 +1,43 @@
 import { motion } from "framer-motion";
-import { FileDown, FileText, GraduationCap, FlaskConical, Award } from "lucide-react";
+import {
+  FileDown,
+  FileText,
+  GraduationCap,
+  FlaskConical,
+  Award,
+} from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { profile } from "../data/profile";
 
 const previewSections = [
-  { icon: GraduationCap, label: "Education", text: "B.Sc. Applied Chemistry, Khatam al-Anbia University of Behbahan (GPA 17.9/20)" },
-  { icon: FlaskConical, label: "Laboratory Training", text: "Instrumental analysis, solution preparation, separation techniques, laboratory safety" },
-  { icon: Award, label: "Experience", text: "Supervised internship — Bid Boland Gas Refinery, HSE-trained" },
-  { icon: FileText, label: "Interests", text: "Organic, organometallic/catalysis, sustainable, and analytical chemistry" },
+  {
+    icon: GraduationCap,
+    label: "Education",
+    text: "B.Sc. Applied Chemistry, Khatam al-Anbia University of Behbahan (GPA 17.9/20)",
+  },
+  {
+    icon: FlaskConical,
+    label: "Laboratory Training",
+    text: "Instrumental analysis, solution preparation, separation techniques, laboratory safety",
+  },
+  {
+    icon: Award,
+    label: "Experience",
+    text: "Supervised internship — Bid Boland Gas Refinery, HSE-trained",
+  },
+  {
+    icon: FileText,
+    label: "Interests",
+    text: "Organic, organometallic/catalysis, sustainable, and analytical chemistry",
+  },
 ];
 
 export default function CV() {
   return (
-    <section id="cv" className="relative py-24 md:py-32 bg-navy overflow-hidden">
+    <section
+      id="cv"
+      className="relative py-24 md:py-32 bg-navy overflow-hidden"
+    >
       <div className="absolute inset-0 grid-backdrop opacity-[0.12]" />
       <div className="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
         <SectionHeading
@@ -35,7 +60,11 @@ export default function CV() {
               key={s.label}
               className="flex items-start gap-4 p-5 rounded-xl bg-white/[0.04] border border-white/10"
             >
-              <s.icon size={18} strokeWidth={1.5} className="text-gold mt-1 shrink-0" />
+              <s.icon
+                size={18}
+                strokeWidth={1.5}
+                className="text-gold mt-1 shrink-0"
+              />
               <div>
                 <p className="text-xs tracking-widest uppercase text-gold-light">
                   {s.label}

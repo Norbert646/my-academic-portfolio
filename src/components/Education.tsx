@@ -30,7 +30,11 @@ export default function Education() {
                 {entry.period}
               </span>
               <h3 className="font-serif-display text-2xl text-offwhite mt-2 flex items-center gap-2">
-                <GraduationCap size={20} className="text-teal-light" strokeWidth={1.5}/>
+                <GraduationCap
+                  size={20}
+                  className="text-teal-light"
+                  strokeWidth={1.5}
+                />
                 {entry.title}
               </h3>
               <p className="text-graycool-light text-sm mt-2 flex items-center gap-1.5">

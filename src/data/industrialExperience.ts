@@ -14,7 +14,8 @@ export const industrialExperience = {
 };
 
 export const hseTraining = {
-  duration: "Structured induction period, integrated into the internship placement",
+  duration:
+    "Structured induction period, integrated into the internship placement",
   topics: [
     "Personal protective equipment (PPE) and correct usage",
     "Hazard identification and reporting procedures",

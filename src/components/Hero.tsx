@@ -94,8 +94,8 @@ export default function Hero() {
             >
               Undergraduate at {profile.university}, currently holding a GPA of{" "}
               {profile.gpa}. My academic curiosity centers on organic and
-              analytical chemistry, supported by hands-on laboratory training and
-              a developing familiarity with instrumental methods.
+              analytical chemistry, supported by hands-on laboratory training
+              and a developing familiarity with instrumental methods.
             </motion.p>
 
             <motion.div
@@ -110,7 +110,7 @@ export default function Hero() {
                 className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-medium text-navy-deep hover:bg-gold-light transition-colors"
               >
                 <FileDown size={16} strokeWidth={2} aria-hidden="true" />
-                View Academic CV
+                Download Academic CV (PDF)
               </a>
               <button
                 onClick={() => scrollToSection("#about")}

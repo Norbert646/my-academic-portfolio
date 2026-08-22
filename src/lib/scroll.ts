@@ -3,7 +3,7 @@ export function scrollToSection(href: string) {
   if (!el) return;
 
   const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
+    "(prefers-reduced-motion: reduce)",
   ).matches;
 
   el.scrollIntoView({

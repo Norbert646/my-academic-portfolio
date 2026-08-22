@@ -14,7 +14,11 @@ export default function InstrumentalAnalysis() {
             description="An overview of the instrumental techniques I have been introduced to during coursework and supervised laboratory sessions. These reflect training-level exposure, not professional proficiency."
             light
           />
-          <Microscope size={44} strokeWidth={1} className="hidden lg:block text-teal-light/40 mb-16" />
+          <Microscope
+            size={44}
+            strokeWidth={1}
+            className="hidden lg:block text-teal-light/40 mb-16"
+          />
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
