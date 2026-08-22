@@ -165,7 +165,7 @@ export default function Contact() {
             </button>
             {sent && (
               <p className="text-xs text-teal-light mt-3">
-                Your email client should now open with the message ready to send.
+                    Thanks — your message has been sent. I'll get back to you soon.
               </p>
             )}
           </motion.form>
