@@ -12,9 +12,6 @@
   --color-teal-light: #3e8888;
   --color-gold: #b9924e;
   --color-gold-light: #d4b375;
-
-  --font-serif: "Cormorant Garamond", "Georgia", serif;
-  --font-sans: "Inter", -apple-system, sans-serif;
 }
 
 html {
@@ -25,7 +22,7 @@ html {
 body {
   background-color: var(--color-offwhite);
   color: var(--color-navy);
-  font-family: var(--font-sans);
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
   -webkit-font-smoothing: antialiased;
 }
 
