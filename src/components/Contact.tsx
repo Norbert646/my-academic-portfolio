@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, ExternalLink, Send, CheckCircle2 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { profile } from "../data/profile";
+import DOMPurify from "dompurify";
 
 const links = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
@@ -29,7 +30,20 @@ export default function Contact() {
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate() || status === "loading") return;
-    
+
+    // پاک‌سازی (Sanitize) ورودی‌ها با DOMPurify
+    const sanitizedData = {
+      name: DOMPurify.sanitize(form.name.trim()),
+      email: DOMPurify.sanitize(form.email.trim()),
+      message: DOMPurify.sanitize(form.message.trim()),
+    };
+
+    // اعتبارسنجی مجدد بعد از پاک‌سازی
+    if (!sanitizedData.name || !sanitizedData.email || !sanitizedData.message) {
+      setErrors({ message: "Please fill in all fields correctly." });
+      return;
+    }
+
     setStatus("loading");
     try {
       const response = await fetch("https://formspree.io/f/your-form-id", {
@@ -37,15 +51,11 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
+        body: JSON.stringify(sanitizedData),
       });
 
       if (!response.ok) throw new Error("Request failed");
-      
+
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setStatus("idle"), 5000);

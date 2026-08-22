@@ -1,10 +1,14 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import removeConsole from 'vite-plugin-remove-console'  // <-- این خط را اضافه کنید
 
-// https://vite.dev/config/
 export default defineConfig(async ({ mode }) => {
-  const plugins = [react(), tailwindcss()];
+  const plugins = [
+    react(),
+    tailwindcss(),
+    removeConsole(),   // <-- این خط را اضافه کنید
+  ];
 
   const env = loadEnv(mode, process.cwd(), ['VITE_', 'NEXT_PUBLIC_']);
   const processEnvDefines: Record<string, string> = {};
@@ -16,7 +20,7 @@ export default defineConfig(async ({ mode }) => {
     plugins,
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: processEnvDefines,
-    build: {              // <-- فقط این بخش رو اضافه کن
+    build: {
       sourcemap: false,
     },
   };
