@@ -26,15 +26,34 @@ export default function Contact() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (ev: React.FormEvent) => {
-    ev.preventDefault();
-    if (!validate()) return;
-    const subject = encodeURIComponent(`Academic Contact from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-  };
+  const handleSubmit = async (ev: React.FormEvent) => {
+  ev.preventDefault();
+  if (!validate()) return;
+
+  try {
+    const response = await fetch("https://formspree.io/f/xqpzjdlo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      }),
+    });
+
+    if (response.ok) {
+      setSent(true);
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setSent(false), 5000);
+    } else {
+      alert("مشکلی در ارسال پیام وجود دارد. لطفاً مستقیماً ایمیل بزنید.");
+    }
+  } catch (error) {
+    alert("خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.");
+  }
+};
 
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-navy">
