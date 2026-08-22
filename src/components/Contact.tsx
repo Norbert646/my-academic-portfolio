@@ -14,7 +14,7 @@ const links = [
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "sent">("idle");
 
   const validate = () => {
     const e: { [k: string]: string } = {};
@@ -27,33 +27,33 @@ export default function Contact() {
   };
 
   const handleSubmit = async (ev: React.FormEvent) => {
-  ev.preventDefault();
-  if (!validate()) return;
+    ev.preventDefault();
+    if (!validate() || status === "loading") return;
+    
+    setStatus("loading");
+    try {
+      const response = await fetch("https://formspree.io/f/your-form-id", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      });
 
-  try {
-    const response = await fetch("https://formspree.io/f/xqpzjdlo", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.name,
-        email: form.email,
-        message: form.message,
-      }),
-    });
-
-    if (response.ok) {
-      setSent(true);
+      if (!response.ok) throw new Error("Request failed");
+      
+      setStatus("sent");
       setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setSent(false), 5000);
-    } else {
-      alert("مشکلی در ارسال پیام وجود دارد. لطفاً مستقیماً ایمیل بزنید.");
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      setStatus("idle");
+      setErrors({ message: "Something went wrong — please try again or email me directly." });
     }
-  } catch (error) {
-    alert("خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.");
-  }
-};
+  };
 
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-navy">
@@ -77,10 +77,10 @@ export default function Contact() {
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 href={l.href}
                 target={l.label === "Email" ? undefined : "_blank"}
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex flex-col gap-3 p-5 rounded-xl bg-white/[0.04] border border-white/10 hover:border-gold/40 hover:bg-white/[0.07] transition-colors"
               >
-                <l.icon size={18} className="text-gold" strokeWidth={1.5} />
+                <l.icon size={18} className="text-gold" strokeWidth={1.5} aria-hidden="true" />
                 <div>
                   <p className="text-[11px] tracking-widest uppercase text-graycool">
                     {l.label}
@@ -158,14 +158,15 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-medium text-navy-deep hover:bg-gold-light transition-colors"
+              disabled={status === "loading"}
+              className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-medium text-navy-deep hover:bg-gold-light transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {sent ? <CheckCircle2 size={16} /> : <Send size={16} />}
-              {sent ? "Message Prepared" : "Send Message"}
+              {status === "sent" ? <CheckCircle2 size={16} aria-hidden="true" /> : <Send size={16} aria-hidden="true" />}
+              {status === "loading" ? "Sending…" : status === "sent" ? "Message Sent" : "Send Message"}
             </button>
-            {sent && (
+            {status === "sent" && (
               <p className="text-xs text-teal-light mt-3">
-                    Thanks — your message has been sent. I'll get back to you soon.
+                Thanks — your message has been sent. I'll get back to you soon.
               </p>
             )}
           </motion.form>
