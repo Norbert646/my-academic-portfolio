@@ -6,8 +6,8 @@
   --color-navy-light: #16324F;
   --color-offwhite: #FAF8F3;
   --color-paper: #F4F1EA;
-  --color-graycool: #8C96A5;
-  --color-graycool-light: #C9CFD8;
+  --color-graycool: #5F6B7A;        /* تیره‌تر شد (قبلاً #8C96A5) */
+  --color-graycool-light: #D7DDE5;  /* روشن‌تر شد (قبلاً #C9CFD8) */
   --color-teal: #2E6B6B;
   --color-teal-light: #3E8888;
   --color-gold: #B9924E;

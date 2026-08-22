@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, FlaskConical } from "lucide-react";
 import { navLinks, profile } from "../data/profile";
+import { scrollToSection } from "../lib/scroll";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState<string>("");
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // تشخیص اسکرول برای تغییر استایل هدر
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
@@ -15,6 +19,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // اسکرول‌اسپای (فعال‌سازی لینک‌ها بر اساس بخش قابل مشاهده)
   useEffect(() => {
     const sections = navLinks
       .map((l) => document.querySelector(l.href))
@@ -33,10 +38,36 @@ export default function Header() {
     return () => observer.disconnect();
   }, []);
 
+  // مدیریت Escape و فوکوس برای منوی موبایل
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    // بستن منو با کلید Escape
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        buttonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+
+    // انتقال فوکوس به اولین لینک منو هنگام باز شدن
+    const timer = setTimeout(() => {
+      const firstLink = menuRef.current?.querySelector("a");
+      if (firstLink) (firstLink as HTMLElement).focus();
+    }, 100);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+      clearTimeout(timer);
+    };
+  }, [mobileOpen]);
+
+  // مدیریت کلیک روی لینک‌های ناوبری
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToSection(href);
+    setTimeout(() => buttonRef.current?.focus(), 200);
   };
 
   return (
@@ -48,6 +79,7 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+        {/* لوگو */}
         <a
           href="#home"
           onClick={(e) => {
@@ -57,13 +89,14 @@ export default function Header() {
           className="flex items-center gap-2.5 group"
         >
           <span className="flex items-center justify-center w-9 h-9 rounded-full border border-gold/50 text-gold group-hover:bg-gold/10 transition-colors">
-            <FlaskConical size={16} strokeWidth={1.75} />
+            <FlaskConical size={16} strokeWidth={1.75} aria-hidden="true" />
           </span>
           <span className="font-serif-display text-lg text-offwhite tracking-wide">
             {profile.firstName} Rezaei
           </span>
         </a>
 
+        {/* ناوبری دسکتاپ */}
         <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
           {navLinks.map((link) => (
             <a
@@ -73,7 +106,8 @@ export default function Header() {
                 e.preventDefault();
                 handleNavClick(link.href);
               }}
-              className={`px-3 py-2 text-sm tracking-wide rounded-full transition-colors ${
+              aria-current={active === link.href ? "page" : undefined}
+              className={`px-3 py-2 text-[13px] tracking-wide rounded-full transition-colors ${
                 active === link.href
                   ? "text-gold"
                   : "text-graycool-light hover:text-offwhite"
@@ -84,6 +118,7 @@ export default function Header() {
           ))}
         </nav>
 
+        {/* دکمه تماس (دسکتاپ) */}
         <div className="hidden lg:block">
           <a
             href="#contact"
@@ -91,32 +126,40 @@ export default function Header() {
               e.preventDefault();
               handleNavClick("#contact");
             }}
-            className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-4 py-2 text-sm text-gold hover:bg-gold hover:text-navy-deep transition-colors"
+            className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-4 py-2 text-[13px] text-gold hover:bg-gold hover:text-navy-deep transition-colors"
           >
             Contact
           </a>
         </div>
 
+        {/* دکمه همبرگر (موبایل) */}
         <button
+          ref={buttonRef}
           className="lg:hidden text-offwhite p-2"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </div>
 
+      {/* منوی موبایل */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={menuRef}
+            id="mobile-nav"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
+            role="navigation"
+            aria-label="Mobile"
             className="lg:hidden bg-navy/98 backdrop-blur-md overflow-hidden border-t border-white/10"
           >
-            <nav className="flex flex-col px-5 py-4" aria-label="Mobile">
+            <nav className="flex flex-col px-5 py-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
@@ -125,6 +168,7 @@ export default function Header() {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
+                  aria-current={active === link.href ? "page" : undefined}
                   className={`py-3 text-base border-b border-white/5 last:border-0 ${
                     active === link.href ? "text-gold" : "text-graycool-light"
                   }`}

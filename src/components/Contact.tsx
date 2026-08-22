@@ -4,7 +4,6 @@ import { Mail, Linkedin, Github, ExternalLink, Send, CheckCircle2 } from "lucide
 import SectionHeading from "./SectionHeading";
 import { profile } from "../data/profile";
 
-
 const links = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
   { label: "LinkedIn", value: "View Profile", href: profile.linkedin, icon: Linkedin },
@@ -27,44 +26,44 @@ export default function Contact() {
     return Object.keys(e).length === 0;
   };
 
-const handleSubmit = async (ev: React.FormEvent) => {
-  ev.preventDefault();
-  if (!validate() || status === "loading") return;
+  const handleSubmit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (!validate() || status === "loading") return;
 
-  const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
-  
-  if (!formEndpoint) {
-    setErrors({ message: "Contact form is temporarily unavailable. Please email me directly." });
-    return;
-  }
-
-  const payload = {
-    name: form.name.trim(),
-    email: form.email.trim(),
-    message: form.message.trim(),
-  };
-
-  setStatus("loading");
-  try {
-    const response = await fetch(formEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) throw new Error("Request failed");
+    const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
     
-    setStatus("sent");
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setStatus("idle"), 5000);
-  } catch {
-    setStatus("idle");
-    setErrors({ message: "Something went wrong — please try again or email me directly." });
-  }
-};
+    if (!formEndpoint) {
+      setErrors({ message: "Contact form is temporarily unavailable. Please email me directly." });
+      return;
+    }
+
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      message: form.message.trim(),
+    };
+
+    setStatus("loading");
+    try {
+      const response = await fetch(formEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("Request failed");
+      
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      setStatus("idle");
+      setErrors({ message: "Something went wrong — please try again or email me directly." });
+    }
+  };
 
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-navy">
@@ -123,7 +122,7 @@ const handleSubmit = async (ev: React.FormEvent) => {
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   aria-invalid={!!errors.name}
                   aria-describedby={errors.name ? "name-error" : undefined}
-                  className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-sm text-offwhite placeholder:text-graycool focus:outline-none focus:border-gold/60"
+                  className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-sm text-offwhite placeholder:text-graycool focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/40 focus:ring-offset-2 focus:ring-offset-navy"
                   placeholder="Your full name"
                 />
                 {errors.name && (
@@ -141,7 +140,7 @@ const handleSubmit = async (ev: React.FormEvent) => {
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? "email-error" : undefined}
-                  className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-sm text-offwhite placeholder:text-graycool focus:outline-none focus:border-gold/60"
+                  className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-sm text-offwhite placeholder:text-graycool focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/40 focus:ring-offset-2 focus:ring-offset-navy"
                   placeholder="you@institution.edu"
                 />
                 {errors.email && (
@@ -160,7 +159,7 @@ const handleSubmit = async (ev: React.FormEvent) => {
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 aria-invalid={!!errors.message}
                 aria-describedby={errors.message ? "message-error" : undefined}
-                className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-sm text-offwhite placeholder:text-graycool focus:outline-none focus:border-gold/60 resize-none"
+                className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-sm text-offwhite placeholder:text-graycool focus:outline-none focus:border-gold/60 focus:ring-2 focus:ring-gold/40 focus:ring-offset-2 focus:ring-offset-navy resize-none"
                 placeholder="Write your message here..."
               />
               {errors.message && (
