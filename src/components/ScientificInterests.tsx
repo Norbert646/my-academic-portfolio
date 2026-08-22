@@ -31,6 +31,9 @@ export default function ScientificInterests() {
             return (
               <motion.button
                 key={card.id}
+                  id={`interest-btn-${card.id}`}
+                 aria-expanded={isOpen}
+                aria-controls={`interest-panel-${card.id}`}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
@@ -50,19 +53,22 @@ export default function ScientificInterests() {
                     {card.short}
                   </p>
                   <motion.div
-                    initial={false}
-                    animate={{
-                      height: isOpen ? "auto" : 0,
-                      opacity: isOpen ? 1 : 0,
-                      marginTop: isOpen ? 14 : 0,
-                    }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-[13px] text-navy/70 leading-relaxed border-t border-navy/10 pt-3">
-                      {card.detail}
-                    </p>
-                  </motion.div>
+  id={`interest-panel-${card.id}`}
+  role="region"
+  aria-labelledby={`interest-btn-${card.id}`}
+  initial={false}
+  animate={{
+    height: isOpen ? "auto" : 0,
+    opacity: isOpen ? 1 : 0,
+    marginTop: isOpen ? 14 : 0,
+  }}
+  transition={{ duration: 0.3, ease: "easeInOut" }}
+  className="overflow-hidden"
+>
+  <p className="text-[13px] text-navy/70 leading-relaxed border-t border-navy/10 pt-3">
+    {card.detail}
+  </p>
+</motion.div>
                 </div>
               </motion.button>
             );
