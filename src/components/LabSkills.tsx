@@ -34,13 +34,13 @@ export default function LabSkills() {
                 </h3>
                 <ul className="space-y-2 mb-4">
                   {g.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-[13px] text-graycool">
+                    <li key={item} className="flex items-start gap-2 text-sm text-graycool">
                       <Check size={14} className="text-teal mt-0.5 shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="text-[12px] text-navy/50 italic border-t border-navy/10 pt-3">
+                <p className="text-xs text-navy/50 italic border-t border-navy/10 pt-3">
                   {g.note}
                 </p>
               </motion.div>

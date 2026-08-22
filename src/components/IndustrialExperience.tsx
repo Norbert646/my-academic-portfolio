@@ -40,7 +40,7 @@ export default function IndustrialExperience() {
             </p>
             <ul className="mt-6 space-y-3">
               {industrialExperience.points.map((point) => (
-                <li key={point} className="flex items-start gap-3 text-[13.5px] text-graycool-light">
+                <li key={point} className="flex items-start gap-3 text-sm text-graycool-light">
                   <ClipboardList size={15} className="text-teal-light mt-0.5 shrink-0" />
                   {point}
                 </li>
@@ -63,16 +63,16 @@ export default function IndustrialExperience() {
                 HSE Training
               </h3>
             </div>
-            <p className="text-graycool-light text-[13.5px] leading-relaxed mb-5">
+            <p className="text-graycool-light text-sm leading-relaxed mb-5">
               <span className="text-gold-light">Duration: </span>
               {hseTraining.duration}
             </p>
-            <p className="text-[12px] tracking-widest uppercase text-gold-light/80 mb-3">
+            <p className="text-xs tracking-widest uppercase text-gold-light/80 mb-3">
               Topics Covered
             </p>
             <ul className="space-y-2.5">
               {hseTraining.topics.map((topic) => (
-                <li key={topic} className="flex items-start gap-2.5 text-[13px] text-graycool-light">
+                <li key={topic} className="flex items-start gap-2.5 text-sm text-graycool-light">
                   <span className="w-1.5 h-1.5 rounded-full bg-gold mt-1.5 shrink-0" />
                   {topic}
                 </li>

@@ -73,7 +73,7 @@ export default function Header() {
                 e.preventDefault();
                 handleNavClick(link.href);
               }}
-              className={`px-3 py-2 text-[13px] tracking-wide rounded-full transition-colors ${
+              className={`px-3 py-2 text-sm tracking-wide rounded-full transition-colors ${
                 active === link.href
                   ? "text-gold"
                   : "text-graycool-light hover:text-offwhite"
@@ -91,7 +91,7 @@ export default function Header() {
               e.preventDefault();
               handleNavClick("#contact");
             }}
-            className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-4 py-2 text-[13px] text-gold hover:bg-gold hover:text-navy-deep transition-colors"
+            className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-4 py-2 text-sm text-gold hover:bg-gold hover:text-navy-deep transition-colors"
           >
             Contact
           </a>

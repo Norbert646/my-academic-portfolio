@@ -82,7 +82,7 @@ export default function Contact() {
               >
                 <l.icon size={18} className="text-gold" strokeWidth={1.5} aria-hidden="true" />
                 <div>
-                  <p className="text-[11px] tracking-widest uppercase text-graycool">
+                  <p className="text-xs tracking-widest uppercase text-graycool">
                     {l.label}
                   </p>
                   <p className="text-sm text-offwhite mt-1 truncate">{l.value}</p>

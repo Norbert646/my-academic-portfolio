@@ -35,7 +35,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-graycool leading-relaxed text-[15px]"
+              className="text-graycool leading-relaxed text-base"
             >
               I am an undergraduate Applied Chemistry student at Khatam
               al-Anbia University of Behbahan, currently in the process of
@@ -50,7 +50,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-4 text-graycool leading-relaxed text-[15px]"
+              className="mt-4 text-graycool leading-relaxed text-base"
             >
               I do not present myself as an expert or an established
               researcher — I am a student, still early in my formation,

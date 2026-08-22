@@ -37,10 +37,10 @@ export default function CV() {
             >
               <s.icon size={18} strokeWidth={1.5} className="text-gold mt-1 shrink-0" />
               <div>
-                <p className="text-[11px] tracking-widest uppercase text-gold-light">
+                <p className="text-xs tracking-widest uppercase text-gold-light">
                   {s.label}
                 </p>
-                <p className="text-[13.5px] text-graycool-light mt-1 leading-relaxed">
+                <p className="text-sm text-graycool-light mt-1 leading-relaxed">
                   {s.text}
                 </p>
               </div>

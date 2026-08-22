@@ -33,7 +33,7 @@ export default function FAQ() {
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
                   >
-                    <span className="font-serif-display text-[17px] text-navy">
+                    <span className="font-serif-display text-lg text-navy">
                       {item.question}
                     </span>
                     <ChevronDown
@@ -56,7 +56,7 @@ export default function FAQ() {
                       transition={{ duration: 0.28, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-5 text-[14px] text-graycool leading-relaxed border-t border-navy/5 pt-4">
+                      <p className="px-6 pb-5 text-sm text-graycool leading-relaxed border-t border-navy/5 pt-4">
                         {item.answer}
                       </p>
                     </motion.div>

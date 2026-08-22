@@ -39,7 +39,7 @@ export default function AcademicJourney() {
                   <h3 className="font-serif-display text-xl text-navy mt-1.5 mb-2">
                     {m.title}
                   </h3>
-                  <p className="text-[13.5px] text-graycool leading-relaxed">
+                  <p className="text-sm text-graycool leading-relaxed">
                     {m.description}
                   </p>
                 </div>

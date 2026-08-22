@@ -70,7 +70,7 @@ export default function ScientificInterests() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="text-[13px] text-navy/70 leading-relaxed border-t border-navy/10 pt-3">
+                    <p className="text-sm text-navy/70 leading-relaxed border-t border-navy/10 pt-3">
                       {card.detail}
                     </p>
                   </motion.div>

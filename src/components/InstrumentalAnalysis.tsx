@@ -36,10 +36,10 @@ export default function InstrumentalAnalysis() {
                 <h3 className="font-serif-display text-lg text-offwhite">
                   {t.name}
                 </h3>
-                <p className="text-[13px] text-graycool-light leading-relaxed mt-1.5">
+                <p className="text-sm text-graycool-light leading-relaxed mt-1.5">
                   {t.description}
                 </p>
-                <span className="inline-block mt-3 text-[11px] tracking-wide uppercase text-gold-light/80">
+                <span className="inline-block mt-3 text-xs tracking-wide uppercase text-gold-light/80">
                   {t.level}
                 </span>
               </div>

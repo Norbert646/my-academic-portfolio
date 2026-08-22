@@ -28,13 +28,13 @@ export default function AcademicDevelopment() {
                 className="p-6 rounded-2xl bg-white border border-navy/10 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(11,29,48,0.08)] transition-all duration-300"
               >
                 <Icon size={20} strokeWidth={1.5} className="text-teal mb-4" />
-                <span className="text-[11px] tracking-widest uppercase text-gold">
+                <span className="text-xs tracking-widest uppercase text-gold">
                   {item.type}
                 </span>
                 <h3 className="font-serif-display text-lg text-navy mt-1.5 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-[13px] text-graycool leading-relaxed">
+                <p className="text-sm text-graycool leading-relaxed">
                   {item.detail}
                 </p>
               </motion.div>

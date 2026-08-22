@@ -37,7 +37,7 @@ export default function InternationalPrep() {
                 <h3 className="font-serif-display text-lg text-navy mt-2 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-[13px] text-graycool leading-relaxed">
+                <p className="text-sm text-graycool leading-relaxed">
                   {item.detail}
                 </p>
               </motion.div>
