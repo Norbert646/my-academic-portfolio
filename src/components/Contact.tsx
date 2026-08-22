@@ -1,54 +1,27 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Mail,
-  Linkedin,
-  Github,
-  ExternalLink,
-  Send,
-  CheckCircle2,
-} from "lucide-react";
+import { Mail, Linkedin, Github, ExternalLink, Send, CheckCircle2 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { profile } from "../data/profile";
 
 const links = [
-  {
-    label: "Email",
-    value: profile.email,
-    href: `mailto:${profile.email}`,
-    icon: Mail,
-  },
-  {
-    label: "LinkedIn",
-    value: "View Profile",
-    href: profile.linkedin,
-    icon: Linkedin,
-  },
-  {
-    label: "ResearchGate",
-    value: "View Profile",
-    href: profile.researchgate,
-    icon: ExternalLink,
-  },
-  {
-    label: "GitHub",
-    value: "View Profile",
-    href: profile.github,
-    icon: Github,
-  },
+  { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+  { label: "LinkedIn", value: "View Profile", href: profile.linkedin, icon: Linkedin },
+  { label: "ResearchGate", value: "View Profile", href: profile.researchgate, icon: ExternalLink },
+  { label: "GitHub", value: "View Profile", href: profile.github, icon: Github },
 ];
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const [status, setStatus] = useState<"idle" | "loading" | "sent">("idle");
+  const [honeypot, setHoneypot] = useState("");
 
   const validate = () => {
     const e: { [k: string]: string } = {};
     if (!form.name.trim()) e.name = "Please enter your name.";
     if (!form.email.trim()) e.email = "Please enter your email.";
-    else if (!/^\S+@\S+\.\S+$/.test(form.email))
-      e.email = "Please enter a valid email.";
+    else if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = "Please enter a valid email.";
     if (!form.message.trim()) e.message = "Please enter a message.";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -58,13 +31,15 @@ export default function Contact() {
     ev.preventDefault();
     if (!validate() || status === "loading") return;
 
-    const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+    if (honeypot) {
+      setErrors({ message: "Spam detected. Your message was blocked." });
+      return;
+    }
 
+    const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+    
     if (!formEndpoint) {
-      setErrors({
-        message:
-          "Contact form is temporarily unavailable. Please email me directly.",
-      });
+      setErrors({ message: "Contact form is temporarily unavailable. Please email me directly." });
       return;
     }
 
@@ -80,22 +55,19 @@ export default function Contact() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
       if (!response.ok) throw new Error("Request failed");
-
+      
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setStatus("idle"), 5000);
     } catch {
       setStatus("idle");
-      setErrors({
-        message:
-          "Something went wrong — please try again or email me directly.",
-      });
+      setErrors({ message: "Something went wrong — please try again or email me directly." });
     }
   };
 
@@ -124,19 +96,12 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="flex flex-col gap-3 p-5 rounded-xl bg-white/[0.04] border border-white/10 hover:border-gold/40 hover:bg-white/[0.07] transition-colors"
               >
-                <l.icon
-                  size={18}
-                  className="text-gold"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
+                <l.icon size={18} className="text-gold" strokeWidth={1.5} aria-hidden="true" />
                 <div>
                   <p className="text-xs tracking-widest uppercase text-graycool">
                     {l.label}
                   </p>
-                  <p className="text-sm text-offwhite mt-1 truncate">
-                    {l.value}
-                  </p>
+                  <p className="text-sm text-offwhite mt-1 truncate">{l.value}</p>
                 </div>
               </motion.a>
             ))}
@@ -153,10 +118,7 @@ export default function Contact() {
           >
             <div className="grid sm:grid-cols-2 gap-5 mb-5">
               <div>
-                <label
-                  htmlFor="name"
-                  className="text-xs text-graycool-light block mb-2"
-                >
+                <label htmlFor="name" className="text-xs text-graycool-light block mb-2">
                   Name
                 </label>
                 <input
@@ -170,16 +132,11 @@ export default function Contact() {
                   placeholder="Your full name"
                 />
                 {errors.name && (
-                  <p id="name-error" className="text-xs text-red-300 mt-1.5">
-                    {errors.name}
-                  </p>
+                  <p id="name-error" className="text-xs text-red-300 mt-1.5">{errors.name}</p>
                 )}
               </div>
               <div>
-                <label
-                  htmlFor="email"
-                  className="text-xs text-graycool-light block mb-2"
-                >
+                <label htmlFor="email" className="text-xs text-graycool-light block mb-2">
                   Email
                 </label>
                 <input
@@ -193,17 +150,12 @@ export default function Contact() {
                   placeholder="you@institution.edu"
                 />
                 {errors.email && (
-                  <p id="email-error" className="text-xs text-red-300 mt-1.5">
-                    {errors.email}
-                  </p>
+                  <p id="email-error" className="text-xs text-red-300 mt-1.5">{errors.email}</p>
                 )}
               </div>
             </div>
             <div className="mb-6">
-              <label
-                htmlFor="message"
-                className="text-xs text-graycool-light block mb-2"
-              >
+              <label htmlFor="message" className="text-xs text-graycool-light block mb-2">
                 Message
               </label>
               <textarea
@@ -217,26 +169,28 @@ export default function Contact() {
                 placeholder="Write your message here..."
               />
               {errors.message && (
-                <p id="message-error" className="text-xs text-red-300 mt-1.5">
-                  {errors.message}
-                </p>
+                <p id="message-error" className="text-xs text-red-300 mt-1.5">{errors.message}</p>
               )}
             </div>
+
+            {/* Honeypot field — hidden from real users */}
+            <input
+              type="text"
+              name="_gotcha"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              style={{ display: "none" }}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+
             <button
               type="submit"
               disabled={status === "loading"}
               className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-medium text-navy-deep hover:bg-gold-light transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {status === "sent" ? (
-                <CheckCircle2 size={16} aria-hidden="true" />
-              ) : (
-                <Send size={16} aria-hidden="true" />
-              )}
-              {status === "loading"
-                ? "Sending…"
-                : status === "sent"
-                  ? "Message Sent"
-                  : "Send Message"}
+              {status === "sent" ? <CheckCircle2 size={16} aria-hidden="true" /> : <Send size={16} aria-hidden="true" />}
+              {status === "loading" ? "Sending…" : status === "sent" ? "Message Sent" : "Send Message"}
             </button>
             {status === "sent" && (
               <p className="text-xs text-teal-light mt-3">
