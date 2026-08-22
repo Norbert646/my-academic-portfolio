@@ -26,6 +26,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 96px;
 }
 
 body {
@@ -53,6 +54,10 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-teal);
+}
+
+section[id] {
+  scroll-margin-top: 96px;
 }
 
 .font-serif-display {
