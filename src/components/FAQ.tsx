@@ -27,6 +27,7 @@ export default function FAQ() {
               >
                 <h3>
                   <button
+                    type="button"
                     id={`faq-btn-${i}`}
                     aria-expanded={isOpen}
                     aria-controls={`faq-panel-${i}`}
@@ -49,6 +50,7 @@ export default function FAQ() {
                   id={`faq-panel-${i}`}
                   role="region"
                   aria-labelledby={`faq-btn-${i}`}
+                  inert={!isOpen}
                   initial={false}
                   animate={{
                     height: isOpen ? "auto" : 0,
