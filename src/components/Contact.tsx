@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, ExternalLink, Send, CheckCircle2 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
@@ -13,11 +13,17 @@ const links = [
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [errors, setErrors] = useState<{ [k: string]: string }>({});
+  const [errors, setErrors] = useState<Partial<Record<"name" | "email" | "message", string>>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "sent">("idle");
   const [honeypot, setHoneypot] = useState("");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const firstErrorRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const validate = () => {
     const e: { [k: string]: string } = {};
@@ -278,9 +284,9 @@ export default function Contact() {
               >
                 Formspree
               </a>{" "}
-             and used solely to reply to your enquiry. They are not shared, sold, or used for marketing,
-and are retained only as long as needed to correspond. No cookies or analytics are used on
-this site. To request deletion, email me directly.
+              and used solely to reply to your enquiry. They are not shared, sold, or used for marketing,
+              and are retained only as long as needed to correspond. No cookies or analytics are used on
+              this site. To request deletion, email me directly.
             </p>
           </motion.form>
         </div>
