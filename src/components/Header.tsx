@@ -24,42 +24,48 @@ export default function Header() {
       .map((l) => document.querySelector(l.href))
       .filter((el): el is Element => el !== null);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) visible.add("#" + e.target.id);
-          else visible.delete("#" + e.target.id);
-        });
-        const topmost = navLinks.find((l) => visible.has(l.href));
-        if (topmost) setActive(topmost.href);
-      },
-      { rootMargin: "-40% 0px -50% 0px", threshold: 0 },
-    );
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) visible.add("#" + e.target.id);
+      else visible.delete("#" + e.target.id);
+    });
+    const topmost = navLinks.find((l) => visible.has(l.href));
+    if (topmost) setActive(topmost.href);
+    else setActive("");
+  },
+  { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+);
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!mobileOpen) return;
+  if (!mobileOpen) {
+    document.body.style.overflow = "";
+    return;
+  }
+  document.body.style.overflow = "hidden";
 
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMobileOpen(false);
-        buttonRef.current?.focus();
-      }
-    };
-    window.addEventListener("keydown", handleEscape);
+  const handleEscape = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setMobileOpen(false);
+      buttonRef.current?.focus();
+    }
+  };
+  window.addEventListener("keydown", handleEscape);
 
-    const timer = setTimeout(() => {
-      const firstLink = menuRef.current?.querySelector("a");
-      if (firstLink) (firstLink as HTMLElement).focus();
-    }, 100);
+  const timer = setTimeout(() => {
+    const firstLink = menuRef.current?.querySelector("a");
+    if (firstLink) (firstLink as HTMLElement).focus();
+  }, 100);
 
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-      clearTimeout(timer);
-    };
-  }, [mobileOpen]);
+  return () => {
+    document.body.style.overflow = "";
+    window.removeEventListener("keydown", handleEscape);
+    clearTimeout(timer);
+  };
+}, [mobileOpen]);
 
   const handleNavClick = (href: string) => {
     const wasMobileOpen = mobileOpen;

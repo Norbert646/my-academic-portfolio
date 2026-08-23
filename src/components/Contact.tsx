@@ -25,15 +25,16 @@ export default function Contact() {
     };
   }, []);
 
-  const validate = () => {
-    const e: { [k: string]: string } = {};
-    if (!form.name.trim()) e.name = "Please enter your name.";
-    if (!form.email.trim()) e.email = "Please enter your email.";
-    else if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = "Please enter a valid email.";
-    if (!form.message.trim()) e.message = "Please enter a message.";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
+const validate = () => {
+  firstErrorRef.current = null;
+  const e: { [k: string]: string } = {};
+  if (!form.name.trim()) e.name = "Please enter your name.";
+  if (!form.email.trim()) e.email = "Please enter your email.";
+  else if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = "Please enter a valid email.";
+  if (!form.message.trim()) e.message = "Please enter a message.";
+  setErrors(e);
+  return Object.keys(e).length === 0;
+};
 
   const clearFieldError = (field: "name" | "email" | "message") => {
     setErrors((prev) => {
@@ -139,7 +140,10 @@ export default function Contact() {
                   <p className="text-xs tracking-widest uppercase text-graycool-light">
                     {l.label}
                   </p>
-                  <p className="text-sm text-offwhite mt-1 break-all">{l.value}</p>
+<p className="text-sm text-offwhite mt-1 break-all">
+  {l.value}
+  {l.label !== "Email" && <span className="sr-only"> (opens in a new tab)</span>}
+</p>
                 </div>
               </motion.a>
             ))}
