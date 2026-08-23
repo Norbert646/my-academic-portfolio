@@ -16,7 +16,7 @@ export default function Contact() {
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const [status, setStatus] = useState<"idle" | "loading" | "sent">("idle");
   const [honeypot, setHoneypot] = useState("");
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // <-- اصلاح شده
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const firstErrorRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
 
   const validate = () => {
@@ -278,11 +278,9 @@ export default function Contact() {
               >
                 Formspree
               </a>{" "}
-              and used solely to reply to your enquiry. They are not shared or used for marketing. See the{" "}
-              <a href="/privacy" className="text-gold underline hover:text-gold-light transition-colors">
-                privacy notice
-              </a>
-              .
+             and used solely to reply to your enquiry. They are not shared, sold, or used for marketing,
+and are retained only as long as needed to correspond. No cookies or analytics are used on
+this site. To request deletion, email me directly.
             </p>
           </motion.form>
         </div>

@@ -6,6 +6,6 @@ import removeConsole from "vite-plugin-remove-console";
 export default defineConfig({
   plugins: [react(), tailwindcss(), removeConsole()],
   build: {
-    sourcemap: "hidden",
+    sourcemap: false,
   },
 });

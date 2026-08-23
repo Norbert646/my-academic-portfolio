@@ -23,7 +23,7 @@ export interface NavLink {
 export const profile: Profile = {
   name: "Hossein Rezaei",
   firstName: "Hossein",
-title: "Applied Chemistry Student  Catalysis & Green Chemistry",
+  title: "Applied Chemistry Student · Catalysis & Green Chemistry",
   avatar: "/profile.jpg",
   university: "Khatam al-Anbia University of Behbahan",
   degree: "B.Sc. in Applied Chemistry",

@@ -17,7 +17,7 @@ export default function AcademicDevelopment() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {academicDevelopment.map((item, i) => {
-            const Icon = icons[i % icons.length]!; // <-- فقط این خط تغییر کرده (! اضافه شده)
+            const Icon = icons[i % icons.length]!;
             return (
               <motion.div
                 key={item.title}
