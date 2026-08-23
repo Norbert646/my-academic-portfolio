@@ -46,6 +46,7 @@ export const navLinks: readonly NavLink[] = [
   { label: "Preparation", href: "#preparation" },
   { label: "Experience", href: "#experience" },
   { label: "Journey", href: "#journey" },
+    { label: "Development", href: "#development" },
   { label: "CV", href: "#cv" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
