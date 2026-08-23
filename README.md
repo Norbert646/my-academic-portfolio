@@ -34,3 +34,4 @@ It includes:
    ```bash
    git clone https://github.com/Norbert646/my-academic-portfolio.git
    cd my-academic-portfolio
+   Live site: https://my-academic-portfolio-pearl.vercel.app
