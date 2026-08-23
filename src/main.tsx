@@ -2,6 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { MotionConfig } from "framer-motion";
 import * as Sentry from "@sentry/react";
+import "@fontsource/cormorant-garamond/400.css";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/600.css";
 import "./index.css";
 import App from "./App.tsx";
 
@@ -18,26 +21,20 @@ createRoot(document.getElementById("root")!).render(
     <Sentry.ErrorBoundary
       fallback={
         <div className="min-h-[100svh] grid place-items-center bg-navy px-6 text-center">
-          <div>
-            <h1 className="font-serif-display text-3xl text-offwhite">
-              Hossein Rezaei
-            </h1>
-            <p className="mt-3 text-graycool-onnavy">
-              Something went wrong loading this page.
-            </p>
-            <a
-              className="mt-6 inline-block text-gold underline hover:text-gold-light transition-colors"
-              href="mailto:hossein.rezaei.chem@gmail.com"
-            >
-              hossein.rezaei.chem@gmail.com
-            </a>
-            <a
-              className="mt-2 block text-gold underline hover:text-gold-light transition-colors"
-              href="/cv/Hossein-Rezaei-Academic-CV.pdf"
-            >
-              Download my CV directly
-            </a>
-          </div>
+          <h1 className="font-serif-display text-3xl text-offwhite">Hossein Rezaei</h1>
+          <p className="mt-3 text-graycool-onnavy">Something went wrong loading this page.</p>
+          <a
+            className="mt-6 inline-block text-gold underline hover:text-gold-light transition-colors"
+            href="mailto:hossein.rezaei.chem@gmail.com"
+          >
+            hossein.rezaei.chem@gmail.com
+          </a>
+          <a
+            className="mt-2 block text-gold underline hover:text-gold-light transition-colors"
+            href="/cv/Hossein-Rezaei-Academic-CV.pdf"
+          >
+            Download my CV directly
+          </a>
         </div>
       }
     >
