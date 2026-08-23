@@ -1,9 +1,13 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, FileDown, Mail } from "lucide-react";
 import { profile } from "../data/profile";
 import { scrollToSection } from "../lib/scroll";
 
 export default function Hero() {
+  const orbitRef = useRef<HTMLDivElement>(null);
+  const orbitInView = useInView(orbitRef, { once: false });
+
   return (
     <section
       id="home"
@@ -12,7 +16,11 @@ export default function Hero() {
       <div className="absolute inset-0 grid-backdrop opacity-[0.35]" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-navy via-navy/95 to-navy-deep" />
 
-      <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[560px] h-[560px] hidden md:block pointer-events-none" aria-hidden="true">
+      <div
+        ref={orbitRef}
+        className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[560px] h-[560px] hidden md:block pointer-events-none"
+        aria-hidden="true"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 0.5, scale: 1 }}
@@ -32,14 +40,14 @@ export default function Hero() {
           className="absolute inset-[150px] rounded-full border border-graycool/20"
         />
         <motion.div
-          animate={{ rotate: 360 }}
+          animate={orbitInView ? { rotate: 360 } : { rotate: 0 }}
           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0"
         >
           <span className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-gold" />
         </motion.div>
         <motion.div
-          animate={{ rotate: -360 }}
+          animate={orbitInView ? { rotate: -360 } : { rotate: 0 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="absolute inset-[70px]"
         >
@@ -63,9 +71,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              initial={false}
               className="font-serif-display text-4xl sm:text-5xl md:text-6xl leading-[1.08] text-offwhite text-balance"
             >
               {profile.name}
@@ -135,20 +141,18 @@ export default function Hero() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={false}
             className="shrink-0"
           >
-<img
-  src="/profile.jpg"
-  alt="Portrait of Hossein Rezaei"
-  width={256}
-  height={256}
-  fetchPriority="high"
-  decoding="async"
-  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full object-cover border-[3px] border-gold/40 shadow-2xl shadow-navy-deep/50"
-/>
+            <img
+              src="/profile.jpg"
+              alt="Portrait of Hossein Rezaei"
+              width={256}
+              height={256}
+              fetchPriority="high"
+              decoding="async"
+              className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full object-cover border-[3px] border-gold/40 shadow-2xl shadow-navy-deep/50"
+            />
           </motion.div>
         </div>
       </div>
