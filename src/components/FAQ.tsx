@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { faqItems } from "../data/faq";
@@ -41,27 +41,26 @@ export default function FAQ() {
                       className={`shrink-0 text-teal transition-transform duration-300 ${
                         isOpen ? "rotate-180" : ""
                       }`}
+                      aria-hidden="true"
                     />
                   </button>
                 </h3>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={`faq-panel-${i}`}
-                      role="region"
-                      aria-labelledby={`faq-btn-${i}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-6 pb-5 text-sm text-graycool leading-relaxed border-t border-navy/5 pt-4">
-                        {item.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  id={`faq-panel-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${i}`}
+                  initial={false}
+                  animate={{
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.28, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="px-6 pb-5 text-sm text-graycool leading-relaxed border-t border-navy/5 pt-4">
+                    {item.answer}
+                  </p>
+                </motion.div>
               </div>
             );
           })}

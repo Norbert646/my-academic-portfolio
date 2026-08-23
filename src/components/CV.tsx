@@ -38,7 +38,7 @@ export default function CV() {
       id="cv"
       className="relative py-24 md:py-32 bg-navy overflow-hidden"
     >
-      <div className="absolute inset-0 grid-backdrop opacity-[0.12]" />
+      <div className="absolute inset-0 grid-backdrop opacity-[0.12]" aria-hidden="true" />
       <div className="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
         <SectionHeading
           eyebrow="Curriculum Vitae"
@@ -64,6 +64,7 @@ export default function CV() {
                 size={18}
                 strokeWidth={1.5}
                 className="text-gold mt-1 shrink-0"
+                aria-hidden="true"
               />
               <div>
                 <p className="text-xs tracking-widest uppercase text-gold-light">
@@ -86,11 +87,11 @@ export default function CV() {
           download
           className="inline-flex items-center gap-3 rounded-full bg-gold px-8 py-4 text-sm font-medium text-navy-deep hover:bg-gold-light transition-colors"
         >
-          <FileDown size={18} strokeWidth={2} />
+          <FileDown size={18} strokeWidth={2} aria-hidden="true" />
           Download Academic CV (PDF)
         </motion.a>
         <p className="text-graycool-light/70 text-xs mt-4">
-          Updated periodically to reflect current academic standing.
+          PDF · 182 KB · Last updated August 2026
         </p>
       </div>
     </section>

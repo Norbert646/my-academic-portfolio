@@ -1,7 +1,29 @@
-export const profile = {
+export interface Profile {
+  name: string;
+  firstName: string;
+  title: string;
+  avatar: string;
+  university: string;
+  degree: string;
+  gpa: string;
+  location: string;
+  email: string;
+  linkedin: string;
+  github: string;
+  researchgate: string;
+  cvPath: string;
+  tagline: string;
+}
+
+export interface NavLink {
+  label: string;
+  href: `#${string}`;
+}
+
+export const profile: Profile = {
   name: "Hossein Rezaei",
   firstName: "Hossein",
-  title: "Applied Chemistry Student",
+  title: "Applied Chemistry Student · Catalysis & Green Chemistry",
   avatar: "/profile.jpg",
   university: "Khatam al-Anbia University of Behbahan",
   degree: "B.Sc. in Applied Chemistry",
@@ -13,10 +35,10 @@ export const profile = {
   researchgate: "https://www.researchgate.net/profile/Hossein-Rezaei-Chem",
   cvPath: "/cv/Hossein-Rezaei-Academic-CV.pdf",
   tagline:
-    "Building a rigorous foundation in Applied Chemistry, with a growing focus on organic and analytical methods, in preparation for graduate study in Europe.",
+    "B.Sc. Applied Chemistry student building toward graduate research in catalysis and green chemistry — with laboratory training in organic synthesis and instrumental analysis, preparing for a Master's in Europe.",
 };
 
-export const navLinks = [
+export const navLinks: readonly NavLink[] = [
   { label: "About", href: "#about" },
   { label: "Education", href: "#education" },
   { label: "Interests", href: "#interests" },

@@ -1,5 +1,13 @@
 export function scrollToSection(href: string) {
-  const el = document.querySelector(href);
+  if (!href.startsWith("#") || href.length < 2) return;
+
+  let el: Element | null = null;
+  try {
+    el = document.querySelector(href);
+  } catch {
+    return;
+  }
+
   if (!el) return;
 
   const prefersReducedMotion = window.matchMedia(
@@ -7,7 +15,9 @@ export function scrollToSection(href: string) {
   ).matches;
 
   el.scrollIntoView({
-    behavior: prefersReducedMotion ? "auto" : "smooth",
+    behavior: prefersReducedMotion ? "instant" : "smooth",
     block: "start",
   });
+
+  history.replaceState(null, "", href);
 }

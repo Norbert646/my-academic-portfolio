@@ -7,14 +7,12 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center bg-navy overflow-hidden pt-28 pb-20"
+      className="relative min-h-[100svh] flex items-center bg-navy overflow-hidden pt-28 pb-20"
     >
-      {/* scientific grid backdrop */}
-      <div className="absolute inset-0 grid-backdrop opacity-[0.35]" />
+      <div className="absolute inset-0 grid-backdrop opacity-[0.35]" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-navy via-navy/95 to-navy-deep" />
 
-      {/* decorative orbit rings - restrained, scientific motif */}
-      <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[560px] h-[560px] hidden md:block pointer-events-none">
+      <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[560px] h-[560px] hidden md:block pointer-events-none" aria-hidden="true">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 0.5, scale: 1 }}
@@ -51,7 +49,6 @@ export default function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8 w-full">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 w-full">
-          {/* سمت چپ: متن */}
           <div className="flex-1 max-w-3xl text-center md:text-left">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -90,7 +87,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.28 }}
-              className="mt-4 text-sm text-graycool leading-relaxed max-w-xl mx-auto md:mx-0"
+              className="mt-4 text-sm text-graycool-onnavy leading-relaxed max-w-xl mx-auto md:mx-0"
             >
               Undergraduate at {profile.university}, currently holding a GPA of{" "}
               {profile.gpa}. My academic curiosity centers on organic and
@@ -112,38 +109,50 @@ export default function Hero() {
                 <FileDown size={16} strokeWidth={2} aria-hidden="true" />
                 Download Academic CV (PDF)
               </a>
-              <button
-                onClick={() => scrollToSection("#about")}
+              <a
+                href="#about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("#about");
+                }}
                 className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-medium text-offwhite hover:border-teal-light hover:text-teal-light transition-colors"
               >
                 Explore My Background
                 <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
-              </button>
-              <button
-                onClick={() => scrollToSection("#contact")}
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("#contact");
+                }}
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-graycool-light hover:text-offwhite transition-colors"
               >
                 <Mail size={16} strokeWidth={2} aria-hidden="true" />
                 Contact Me
-              </button>
+              </a>
             </motion.div>
           </div>
 
-          {/* سمت راست: عکس پروفایل */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="shrink-0"
           >
-            <img
-              src={profile.avatar}
-              alt={`${profile.name} profile photo`}
-              width={256}
-              height={256}
-              fetchPriority="high"
-              className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full object-cover border-[3px] border-gold/40 shadow-2xl shadow-navy-deep/50"
-            />
+            <picture>
+              <source srcSet="/profile.avif" type="image/avif" />
+              <source srcSet="/profile.webp" type="image/webp" />
+              <img
+                src="/profile.jpg"
+                alt="Portrait of Hossein Rezaei"
+                width={256}
+                height={256}
+                fetchPriority="high"
+                decoding="async"
+                className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full object-cover border-[3px] border-gold/40 shadow-2xl shadow-navy-deep/50"
+              />
+            </picture>
           </motion.div>
         </div>
       </div>

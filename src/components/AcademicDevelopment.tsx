@@ -7,7 +7,7 @@ const icons = [Presentation, BookOpen, Users, PenLine];
 
 export default function AcademicDevelopment() {
   return (
-    <section className="relative py-24 md:py-32 bg-paper">
+    <section id="development" className="relative py-24 md:py-32 bg-paper">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <SectionHeading
           eyebrow="Academic Development"
@@ -17,7 +17,7 @@ export default function AcademicDevelopment() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {academicDevelopment.map((item, i) => {
-            const Icon = icons[i % icons.length];
+            const Icon = icons[i % icons.length]!; // <-- فقط این خط تغییر کرده (! اضافه شده)
             return (
               <motion.div
                 key={item.title}
@@ -27,8 +27,8 @@ export default function AcademicDevelopment() {
                 transition={{ duration: 0.55, delay: i * 0.08 }}
                 className="p-6 rounded-2xl bg-white border border-navy/10 hover:-translate-y-1 hover:shadow-[0_16px_32px_rgba(11,29,48,0.08)] transition-all duration-300"
               >
-                <Icon size={20} strokeWidth={1.5} className="text-teal mb-4" />
-                <span className="text-xs tracking-widest uppercase text-gold">
+                <Icon size={20} strokeWidth={1.5} className="text-teal mb-4" aria-hidden="true" />
+                <span className="text-xs tracking-widest uppercase text-gold-dark">
                   {item.type}
                 </span>
                 <h3 className="font-serif-display text-lg text-navy mt-1.5 mb-2">

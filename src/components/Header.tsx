@@ -11,7 +11,6 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // تشخیص اسکرول برای تغییر استایل هدر
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
@@ -19,18 +18,20 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // اسکرول‌اسپای (فعال‌سازی لینک‌ها بر اساس بخش قابل مشاهده)
   useEffect(() => {
+    const visible = new Set<string>();
     const sections = navLinks
       .map((l) => document.querySelector(l.href))
-      .filter(Boolean) as Element[];
+      .filter((el): el is Element => el !== null);
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive("#" + entry.target.id);
-          }
+        entries.forEach((e) => {
+          if (e.isIntersecting) visible.add("#" + e.target.id);
+          else visible.delete("#" + e.target.id);
         });
+        const topmost = navLinks.find((l) => visible.has(l.href));
+        if (topmost) setActive(topmost.href);
       },
       { rootMargin: "-40% 0px -50% 0px", threshold: 0 },
     );
@@ -38,11 +39,9 @@ export default function Header() {
     return () => observer.disconnect();
   }, []);
 
-  // مدیریت Escape و فوکوس برای منوی موبایل
   useEffect(() => {
     if (!mobileOpen) return;
 
-    // بستن منو با کلید Escape
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMobileOpen(false);
@@ -51,7 +50,6 @@ export default function Header() {
     };
     window.addEventListener("keydown", handleEscape);
 
-    // انتقال فوکوس به اولین لینک منو هنگام باز شدن
     const timer = setTimeout(() => {
       const firstLink = menuRef.current?.querySelector("a");
       if (firstLink) (firstLink as HTMLElement).focus();
@@ -63,23 +61,29 @@ export default function Header() {
     };
   }, [mobileOpen]);
 
-  // مدیریت کلیک روی لینک‌های ناوبری
   const handleNavClick = (href: string) => {
+    const wasMobileOpen = mobileOpen;
     setMobileOpen(false);
     scrollToSection(href);
-    setTimeout(() => buttonRef.current?.focus(), 200);
+
+    const target = document.querySelector<HTMLElement>(href);
+    if (target) {
+      target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+    } else if (wasMobileOpen) {
+      buttonRef.current?.focus();
+    }
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,padding,box-shadow] duration-300 ${
         scrolled
           ? "bg-navy/95 backdrop-blur-md shadow-[0_4px_24px_rgba(11,29,48,0.25)] py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
-        {/* لوگو */}
         <a
           href="#home"
           onClick={(e) => {
@@ -92,11 +96,10 @@ export default function Header() {
             <FlaskConical size={16} strokeWidth={1.75} aria-hidden="true" />
           </span>
           <span className="font-serif-display text-lg text-offwhite tracking-wide">
-            {profile.firstName} Rezaei
+            {profile.name}
           </span>
         </a>
 
-        {/* ناوبری دسکتاپ */}
         <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
           {navLinks.map((link) => (
             <a
@@ -107,7 +110,7 @@ export default function Header() {
                 handleNavClick(link.href);
               }}
               aria-current={active === link.href ? "page" : undefined}
-              className={`px-3 py-2 text-[13px] tracking-wide rounded-full transition-colors ${
+              className={`px-3 py-2 text-sm tracking-wide rounded-full transition-colors ${
                 active === link.href
                   ? "text-gold"
                   : "text-graycool-light hover:text-offwhite"
@@ -118,7 +121,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* دکمه تماس (دسکتاپ) */}
         <div className="hidden lg:block">
           <a
             href="#contact"
@@ -126,13 +128,12 @@ export default function Header() {
               e.preventDefault();
               handleNavClick("#contact");
             }}
-            className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-4 py-2 text-[13px] text-gold hover:bg-gold hover:text-navy-deep transition-colors"
+            className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-4 py-2 text-sm text-gold hover:bg-gold hover:text-navy-deep transition-colors"
           >
             Contact
           </a>
         </div>
 
-        {/* دکمه همبرگر (موبایل) */}
         <button
           ref={buttonRef}
           className="lg:hidden text-offwhite p-2"
@@ -149,7 +150,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* منوی موبایل */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -159,8 +159,6 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            role="navigation"
-            aria-label="Mobile"
             className="lg:hidden bg-navy/98 backdrop-blur-md overflow-hidden border-t border-white/10"
           >
             <nav className="flex flex-col px-5 py-4">

@@ -1,25 +1,28 @@
 {
-  "name": "vite-react-ts-fullstack",
+  "name": "academic-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Academic portfolio of Hossein Rezaei — Applied Chemistry, catalysis & green chemistry.",
+  "author": "Hossein Rezaei",
+  "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@sentry/react": "^10.70.0",
-    "@tailwindcss/vite": "^4.2.1",
     "framer-motion": "^12.35.0",
     "lucide-react": "^0.577.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "tailwindcss": "^4.2.1"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -28,6 +31,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
     "vite": "^7.3.1",
