@@ -4,12 +4,7 @@ import SectionHeading from "./SectionHeading";
 import { labSkillGroups } from "../data/labSkills";
 import { courses } from "../data/courses";
 
-const icons = {
-  beaker: Beaker,
-  layers: Layers,
-  shield: Shield,
-  laptop: Laptop,
-};
+const icons = { beaker: Beaker, layers: Layers, shield: Shield, laptop: Laptop };
 
 export default function LabSkills() {
   return (
@@ -23,7 +18,7 @@ export default function LabSkills() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
           {labSkillGroups.map((g, i) => {
-            const Icon = icons[g.icon];
+            const Icon = icons[g.icon as keyof typeof icons];
             return (
               <motion.div
                 key={g.title}
@@ -33,22 +28,19 @@ export default function LabSkills() {
                 transition={{ duration: 0.55, delay: i * 0.08 }}
                 className="rounded-2xl border border-navy/10 bg-white p-6"
               >
-                <Icon size={22} strokeWidth={1.5} className="text-teal mb-4" />
+                <Icon size={22} strokeWidth={1.5} className="text-teal mb-4" aria-hidden="true" />
                 <h3 className="font-serif-display text-lg text-navy mb-3">
                   {g.title}
                 </h3>
                 <ul className="space-y-2 mb-4">
                   {g.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2 text-sm text-graycool"
-                    >
-                      <Check size={14} className="text-teal mt-0.5 shrink-0" />
+                    <li key={item} className="flex items-start gap-2 text-[13px] text-graycool">
+                      <Check size={14} className="text-teal mt-0.5 shrink-0" aria-hidden="true" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="text-xs text-navy/50 italic border-t border-navy/10 pt-3">
+                <p className="text-[12px] text-navy/50 italic border-t border-navy/10 pt-3">
                   {g.note}
                 </p>
               </motion.div>
@@ -67,8 +59,8 @@ export default function LabSkills() {
             Courses & Training
           </h3>
           <p className="text-graycool-light text-sm mb-8 max-w-xl">
-            Core coursework forming the academic basis of my chemistry education
-            to date.
+            Core coursework forming the academic basis of my chemistry
+            education to date.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
             {courses.map((c) => (

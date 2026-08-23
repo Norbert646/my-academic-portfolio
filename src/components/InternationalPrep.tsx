@@ -15,7 +15,7 @@ export default function InternationalPrep() {
               description="Concrete steps I am taking to become a well-prepared candidate for European Master's programs."
             />
             <div className="flex items-center gap-3 mt-6 text-teal">
-              <Globe2 size={22} strokeWidth={1.5} />
+              <Globe2 size={22} strokeWidth={1.5} aria-hidden="true" />
               <span className="text-sm text-graycool">
                 Oriented toward chemistry departments across Europe
               </span>
@@ -37,7 +37,7 @@ export default function InternationalPrep() {
                 <h3 className="font-serif-display text-lg text-navy mt-2 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-sm text-graycool leading-relaxed">
+                <p className="text-[13px] text-graycool leading-relaxed">
                   {item.detail}
                 </p>
               </motion.div>

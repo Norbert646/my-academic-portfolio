@@ -6,7 +6,7 @@ import { educationTimeline } from "../data/education";
 export default function Education() {
   return (
     <section id="education" className="relative py-24 md:py-32 bg-navy">
-      <div className="absolute inset-0 grid-backdrop opacity-[0.12]" />
+      <div className="absolute inset-0 grid-backdrop opacity-[0.12]" aria-hidden="true" />
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
         <SectionHeading
           eyebrow="Education"
@@ -30,22 +30,18 @@ export default function Education() {
                 {entry.period}
               </span>
               <h3 className="font-serif-display text-2xl text-offwhite mt-2 flex items-center gap-2">
-                <GraduationCap
-                  size={20}
-                  className="text-teal-light"
-                  strokeWidth={1.5}
-                />
+                <GraduationCap size={20} className="text-teal-light" strokeWidth={1.5} aria-hidden="true" />
                 {entry.title}
               </h3>
               <p className="text-graycool-light text-sm mt-2 flex items-center gap-1.5">
-                <MapPin size={13} /> {entry.institution}, {entry.location}
+                <MapPin size={13} aria-hidden="true" /> {entry.institution}, {entry.location}
               </p>
               <p className="text-graycool-light/90 text-sm leading-relaxed mt-3 max-w-xl">
                 {entry.detail}
               </p>
               {entry.highlight && (
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-xs text-gold">
-                  <Award size={13} />
+                  <Award size={13} aria-hidden="true" />
                   {entry.highlight}
                 </div>
               )}

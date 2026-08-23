@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-5">
         <div className="flex items-center gap-2.5">
           <span className="flex items-center justify-center w-8 h-8 rounded-full border border-gold/40 text-gold">
-            <FlaskConical size={14} strokeWidth={1.75} />
+            <FlaskConical size={14} strokeWidth={1.75} aria-hidden="true" />
           </span>
           <span className="text-sm text-graycool-light">
             {profile.name} &middot; {profile.title}

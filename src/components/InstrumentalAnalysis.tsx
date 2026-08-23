@@ -14,11 +14,7 @@ export default function InstrumentalAnalysis() {
             description="An overview of the instrumental techniques I have been introduced to during coursework and supervised laboratory sessions. These reflect training-level exposure, not professional proficiency."
             light
           />
-          <Microscope
-            size={44}
-            strokeWidth={1}
-            className="hidden lg:block text-teal-light/40 mb-16"
-          />
+          <Microscope size={44} strokeWidth={1} className="hidden lg:block text-teal-light/40 mb-16" aria-hidden="true" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
@@ -40,10 +36,10 @@ export default function InstrumentalAnalysis() {
                 <h3 className="font-serif-display text-lg text-offwhite">
                   {t.name}
                 </h3>
-                <p className="text-sm text-graycool-light leading-relaxed mt-1.5">
+                <p className="text-[13px] text-graycool-light leading-relaxed mt-1.5">
                   {t.description}
                 </p>
-                <span className="inline-block mt-3 text-xs tracking-wide uppercase text-gold-light/80">
+                <span className="inline-block mt-3 text-[11px] tracking-wide uppercase text-gold-light/80">
                   {t.level}
                 </span>
               </div>
