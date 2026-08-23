@@ -23,7 +23,7 @@ export interface NavLink {
 export const profile: Profile = {
   name: "Hossein Rezaei",
   firstName: "Hossein",
-  title: "Applied Chemistry Student · Catalysis & Green Chemistry",
+title: "Applied Chemistry Student  Catalysis & Green Chemistry",
   avatar: "/profile.jpg",
   university: "Khatam al-Anbia University of Behbahan",
   degree: "B.Sc. in Applied Chemistry",
@@ -34,8 +34,7 @@ export const profile: Profile = {
   github: "https://github.com/Norbert646",
   researchgate: "https://www.researchgate.net/profile/Hossein-Rezaei-Chem",
   cvPath: "/cv/Hossein-Rezaei-Academic-CV.pdf",
-  tagline:
-    "B.Sc. Applied Chemistry student building toward graduate research in catalysis and green chemistry — with laboratory training in organic synthesis and instrumental analysis, preparing for a Master's in Europe.",
+  tagline: "B.Sc. Applied Chemistry student building toward graduate research in catalysis and green chemistry — with laboratory training in organic synthesis and instrumental analysis, preparing for a Master's in Europe.",
 };
 
 export const navLinks: readonly NavLink[] = [

@@ -140,19 +140,15 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="shrink-0"
           >
-            <picture>
-              <source srcSet="/profile.avif" type="image/avif" />
-              <source srcSet="/profile.webp" type="image/webp" />
-              <img
-                src="/profile.jpg"
-                alt="Portrait of Hossein Rezaei"
-                width={256}
-                height={256}
-                fetchPriority="high"
-                decoding="async"
-                className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full object-cover border-[3px] border-gold/40 shadow-2xl shadow-navy-deep/50"
-              />
-            </picture>
+<img
+  src="/profile.jpg"
+  alt="Portrait of Hossein Rezaei"
+  width={256}
+  height={256}
+  fetchPriority="high"
+  decoding="async"
+  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full object-cover border-[3px] border-gold/40 shadow-2xl shadow-navy-deep/50"
+/>
           </motion.div>
         </div>
       </div>
