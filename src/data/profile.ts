@@ -29,7 +29,7 @@ export const profile: Profile = {
   degree: "B.Sc. in Applied Chemistry",
   gpa: "17.9 / 20",
   location: "Behbahan, Khuzestan, Iran",
-  email: "hossein.rezaei.chem@gmail.com",
+email: "hossein9990.ir@gmail.com",
   linkedin: "https://www.linkedin.com/in/hossein-rezaei-chemistry/",
   github: "https://github.com/Norbert646",
   researchgate: "https://www.researchgate.net/profile/Hossein-Rezaei-Chem",

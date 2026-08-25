@@ -25,9 +25,9 @@ createRoot(document.getElementById("root")!).render(
           <p className="mt-3 text-graycool-onnavy">Something went wrong loading this page.</p>
           <a
             className="mt-6 inline-block text-gold underline hover:text-gold-light transition-colors"
-            href="mailto:hossein.rezaei.chem@gmail.com"
+  href="mailto:hossein9990.ir@gmail.com"
           >
-            hossein.rezaei.chem@gmail.com
+            hossein9990.ir@gmail.com
           </a>
           <a
             className="mt-2 block text-gold underline hover:text-gold-light transition-colors"
