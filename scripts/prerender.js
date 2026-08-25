@@ -4,20 +4,18 @@ import { fileURLToPath } from "url";
 import React from "react";
 import { renderToString } from "react-dom/server";
 
-// تنظیم مسیر برای ماژول‌های ES
+// تنظیم مسیر
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// تنظیم React در global برای پشتیبانی از JSX در App
 global.React = React;
 
-// ایمپورت اپلیکیشن (توجه: پسوند .tsx را مستقیم وارد می‌کنیم)
+// ایمپورت App
 import App from "../src/App.tsx";
 
-// رندر کردن اپلیکیشن به رشته HTML
+// رندر کردن App به HTML
 const appHtml = renderToString(React.createElement(App));
 
-// قالب نهایی HTML
+// قالب HTML کامل
 const template = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,14 +89,10 @@ const template = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// مسیر پوشه dist
+// نوشتن فایل در dist
 const distPath = path.resolve("dist");
-
-// اطمینان از وجود پوشه dist
 if (!fs.existsSync(distPath)) {
   fs.mkdirSync(distPath, { recursive: true });
 }
-
-// نوشتن فایل index.html در پوشه dist
 fs.writeFileSync(path.join(distPath, "index.html"), template);
-console.log("✅ Pre-rendered index.html با موفقیت ساخته شد!");
+console.log("✅ Pre-rendered index.html created successfully!");
