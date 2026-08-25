@@ -16,31 +16,42 @@ Sentry.init({
   tracesSampleRate: 0,
 });
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Sentry.ErrorBoundary
-      fallback={
-        <div className="min-h-[100svh] grid place-items-center bg-navy px-6 text-center">
-          <h1 className="font-serif-display text-3xl text-offwhite">Hossein Rezaei</h1>
-          <p className="mt-3 text-graycool-onnavy">Something went wrong loading this page.</p>
-          <a
-            className="mt-6 inline-block text-gold underline hover:text-gold-light transition-colors"
-  href="mailto:hossein9990.ir@gmail.com"
-          >
-            hossein9990.ir@gmail.com
-          </a>
-          <a
-            className="mt-2 block text-gold underline hover:text-gold-light transition-colors"
-            href="/cv/Hossein-Rezaei-Academic-CV.pdf"
-          >
-            Download my CV directly
-          </a>
-        </div>
-      }
-    >
-      <MotionConfig reducedMotion="user">
-        <App />
-      </MotionConfig>
-    </Sentry.ErrorBoundary>
-  </StrictMode>,
-);
+// 👇 تابع کمکی برای رندر کردن برنامه (مورد نیاز SSG)
+export function createApp() {
+  return (
+    <StrictMode>
+      <Sentry.ErrorBoundary
+        fallback={
+          <div className="min-h-[100svh] grid place-items-center bg-navy px-6 text-center">
+            <h1 className="font-serif-display text-3xl text-offwhite">
+              Hossein Rezaei
+            </h1>
+            <p className="mt-3 text-graycool-onnavy">
+              Something went wrong loading this page.
+            </p>
+            <a
+              className="mt-6 inline-block text-gold underline hover:text-gold-light transition-colors"
+              href="mailto:hossein9990.ir@gmail.com"
+            >
+              hossein9990.ir@gmail.com
+            </a>
+            <a
+              className="mt-2 block text-gold underline hover:text-gold-light transition-colors"
+              href="/cv/Hossein-Rezaei-Academic-CV.pdf"
+            >
+              Download my CV directly
+            </a>
+          </div>
+        }
+      >
+        <MotionConfig reducedMotion="user">
+          <App />
+        </MotionConfig>
+      </Sentry.ErrorBoundary>
+    </StrictMode>
+  );
+}
+
+if (typeof window !== "undefined" && !import.meta.env.SSG) {
+  createRoot(document.getElementById("root")!).render(createApp());
+}
