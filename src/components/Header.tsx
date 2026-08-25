@@ -101,9 +101,9 @@ const handleNavClick = (href: string) => {
           <span className="flex items-center justify-center w-9 h-9 rounded-full border border-gold/50 text-gold group-hover:bg-gold/10 transition-colors">
             <FlaskConical size={16} strokeWidth={1.75} aria-hidden="true" />
           </span>
-          <span className="font-serif-display text-lg text-offwhite tracking-wide">
-            {profile.name}
-          </span>
+<span className="font-serif-display text-lg text-offwhite tracking-wide">
+  {profile.firstName} Rezaei
+</span>
         </a>
 
         <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">

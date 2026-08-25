@@ -23,12 +23,12 @@ export const academicJourney: JourneyMilestone[] = [
     description:
       "Engaged with instrumental methods including chromatography and spectroscopy, deepening interest in analytical chemistry as a discipline.",
   },
-  {
-    year: "2024",
-    title: "Industrial Internship",
-    description:
-      "Completed a supervised internship at Bid Boland Gas Refinery, gaining early perspective on industrial applications of chemistry and HSE practice.",
-  },
+{
+  year: "2026",
+  title: "Industrial Internship",
+  description:
+    "Completed a supervised internship at Bid Boland Gas Refinery (Summer 2026), gaining early perspective on industrial applications of chemistry and HSE practice.",
+},
   {
     year: "2025 — Present",
     title: "Preparation for Graduate Study",

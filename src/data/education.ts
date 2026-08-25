@@ -18,11 +18,12 @@ export const educationTimeline: EducationEntry[] = [
     highlight: "Current GPA: 17.9 / 20",
   },
   {
-    period: "2018 — 2022",
-    title: "Secondary Education, Mathematics & Physical Sciences",
-    institution: "National Curriculum, Iran",
-    location: "Khuzestan Province, Iran",
+    period: "2019 — 2022",
+    title: "Secondary Education, Experimental Sciences",
+    institution: "Azadegan High School",
+    location: "Ahvaz, Khuzestan, Iran",
     detail:
-      "Focused pre-university study in mathematics and the physical sciences, forming the analytical basis for later specialization in chemistry.",
+      "Focused pre-university study in the Experimental Sciences track, including advanced coursework in chemistry, biology, physics, and mathematics, forming a broad scientific foundation for later specialization in chemistry."
+
   },
 ];

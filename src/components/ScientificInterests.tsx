@@ -36,6 +36,8 @@ export default function ScientificInterests() {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.55, delay: i * 0.08 }}
                 className="group relative rounded-2xl border border-navy/10 bg-white p-7 overflow-hidden hover:shadow-[0_16px_40px_rgba(11,29,48,0.08)] hover:border-teal/30 transition-all duration-300"
+                onMouseEnter={() => setOpenId(card.id)}
+                onMouseLeave={() => setOpenId(null)}
               >
                 <div className="absolute top-0 right-0 w-24 h-24 bg-teal/5 rounded-full -translate-y-8 translate-x-8 group-hover:scale-150 transition-transform duration-500" aria-hidden="true" />
                 <div className="relative">
@@ -50,13 +52,12 @@ export default function ScientificInterests() {
                     id={`interest-btn-${card.id}`}
                     aria-expanded={isOpen}
                     aria-controls={`interest-panel-${card.id}`}
-                    aria-label={`${isOpen ? "Hide" : "Show"} details about ${card.title}`}
                     onClick={() => setOpenId(isOpen ? null : card.id)}
                     className="text-left w-full"
                   >
-                    <span className="block text-sm text-graycool leading-relaxed">
+                    <p className="text-sm text-graycool leading-relaxed">
                       {card.short}
-                    </span>
+                    </p>
                   </button>
                   <motion.div
                     id={`interest-panel-${card.id}`}

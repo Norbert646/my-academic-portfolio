@@ -1,7 +1,7 @@
 export const industrialExperience = {
   organization: "Bid Boland Gas Refinery",
   role: "Chemistry Internship Trainee",
-  period: "Summer Internship",
+  period: "Summer 2026",
   location: "Khuzestan, Iran",
   description:
     "Completed a supervised internship placement at Bid Boland Gas Refinery, where I was introduced to laboratory and process-monitoring practices within an industrial setting. My involvement was observational and supportive in nature, conducted under the guidance of refinery personnel, and did not include independent operational or analytical responsibility.",
