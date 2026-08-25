@@ -70,13 +70,14 @@ const observer = new IntersectionObserver(
 const handleNavClick = (href: string) => {
   const wasMobileOpen = mobileOpen;
   setMobileOpen(false);
-  scrollToSection(href);
-  const target = document.querySelector<HTMLElement>(href);
-  if (target) {
-    target.setAttribute("tabindex", "-1");
-    target.focus(); // حذف preventScroll: true
-  } else if (wasMobileOpen) {
-    buttonRef.current?.focus();
+
+  // اگر منو باز بود، بعد از بسته شدن (با تاخیر) اسکرول کنیم
+  if (wasMobileOpen) {
+    setTimeout(() => {
+      scrollToSection(href);
+    }, 100); // ۱۰۰ میلی‌ثانیه تاخیر برای اطمینان از بسته شدن منو
+  } else {
+    scrollToSection(href);
   }
 };
 

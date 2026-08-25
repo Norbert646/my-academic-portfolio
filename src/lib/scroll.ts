@@ -11,13 +11,19 @@ export function scrollToSection(href: string) {
   if (!el) return;
 
   const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
+    "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  el.scrollIntoView({
-    behavior: prefersReducedMotion ? "instant" : "smooth",
-    block: "start",
-  });
+  // برای اطمینان از اجرای اسکرول در موبایل
+  try {
+    el.scrollIntoView({
+      behavior: prefersReducedMotion ? "instant" : "smooth",
+      block: "start",
+    });
+  } catch {
+    // fallback در صورت خطا
+    el.scrollIntoView(true);
+  }
 
   history.replaceState(null, "", href);
 }
