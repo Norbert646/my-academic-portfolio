@@ -67,19 +67,18 @@ const observer = new IntersectionObserver(
   };
 }, [mobileOpen]);
 
-  const handleNavClick = (href: string) => {
-    const wasMobileOpen = mobileOpen;
-    setMobileOpen(false);
-    scrollToSection(href);
-
-    const target = document.querySelector<HTMLElement>(href);
-    if (target) {
-      target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
-    } else if (wasMobileOpen) {
-      buttonRef.current?.focus();
-    }
-  };
+const handleNavClick = (href: string) => {
+  const wasMobileOpen = mobileOpen;
+  setMobileOpen(false);
+  scrollToSection(href);
+  const target = document.querySelector<HTMLElement>(href);
+  if (target) {
+    target.setAttribute("tabindex", "-1");
+    target.focus(); // حذف preventScroll: true
+  } else if (wasMobileOpen) {
+    buttonRef.current?.focus();
+  }
+};
 
   return (
     <header
