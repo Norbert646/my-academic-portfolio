@@ -14,8 +14,8 @@
   --color-gold: #b9924e;
   --color-gold-light: #d4b375;
   --color-gold-dark: #7a5f2c;
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-serif-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-serif-display: "Cormorant Garamond", ui-serif, Georgia, serif;
 }
 
 @utility grid-backdrop {
