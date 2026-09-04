@@ -1,98 +1,137 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import React from "react";
-import { renderToString } from "react-dom/server";
+#!/usr/bin/env node
+/**
+ * Static pre-rendering for the portfolio.
+ *
+ * Runs after `vite build` (see package.json → "build"):
+ *   1. Builds a server bundle of src/entry-server.tsx into a temp dir.
+ *   2. Renders <App /> to an HTML string.
+ *   3. Injects it into dist/index.html in place of <!--app-html-->.
+ *   4. Adds <link rel="preload"> for the two fonts used above the fold.
+ *   5. Regenerates dist/sitemap.xml with today's date.
+ *   6. Removes the temp server bundle.
+ *
+ * The result: crawlers, link unfurlers and first paint no longer depend on
+ * JavaScript; React hydrates the existing markup on the client.
+ */
+import { build } from "vite";
+import react from "@vitejs/plugin-react";
+import { readFile, writeFile, readdir, rm } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { pathToFileURL } from "node:url";
+import path from "node:path";
 
-// تنظیم مسیر
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-global.React = React;
+const ROOT = process.cwd();
+const DIST = path.join(ROOT, "dist");
+const SSR_OUT = path.join(ROOT, ".prerender");
+const SITE_URL = "https://my-academic-portfolio-pearl.vercel.app";
 
-// ایمپورت App
-import App from "../src/App.tsx";
+const PLACEHOLDER = "<!--app-html-->";
+const PRELOAD_FONTS = [
+  /^inter-latin-wght-normal-.*\.woff2$/,
+  /^cormorant-garamond-latin-600-normal-.*\.woff2$/,
+];
 
-// رندر کردن App به HTML
-const appHtml = renderToString(React.createElement(App));
-
-// قالب HTML کامل
-const template = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0b1d30" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <title>Hossein Rezaei | Catalysis & Green Chemistry — Academic Portfolio</title>
-  <meta name="description" content="Academic portfolio of Hossein Rezaei: B.Sc. Applied Chemistry (GPA 17.9/20), focused on catalysis and green chemistry, applying for Master's study in Europe." />
-  <meta name="author" content="Hossein Rezaei" />
-  <meta name="keywords" content="Hossein Rezaei, catalysis, green chemistry, sustainable chemistry, organometallic chemistry, applied chemistry, Master's admission Europe, chemistry student portfolio" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Hossein Rezaei | Catalysis & Green Chemistry" />
-  <meta property="og:description" content="B.Sc. Applied Chemistry student (GPA 17.9/20) focused on catalysis and green chemistry, preparing for Master's study in Europe." />
-  <meta property="og:url" content="https://my-academic-portfolio-pearl.vercel.app/" />
-  <meta property="og:site_name" content="Hossein Rezaei — Academic Portfolio" />
-  <meta property="og:image" content="https://my-academic-portfolio-pearl.vercel.app/og-image.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Hossein Rezaei — Applied Chemistry, Catalysis and Green Chemistry" />
-  <meta property="og:locale" content="en_US" />
-  <link rel="canonical" href="https://my-academic-portfolio-pearl.vercel.app/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Hossein Rezaei | Catalysis & Green Chemistry" />
-  <meta name="twitter:description" content="B.Sc. Applied Chemistry student preparing for Master's study in Europe." />
-  <meta name="twitter:image" content="https://my-academic-portfolio-pearl.vercel.app/og-image.png" />
-  <meta name="twitter:image:alt" content="Hossein Rezaei — Applied Chemistry, Catalysis and Green Chemistry" />
-  <link rel="preload" as="image" href="/profile.jpg" fetchpriority="high" />
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfilePage",
-      "mainEntity": {
-        "@type": "Person",
-        "name": "Hossein Rezaei",
-        "jobTitle": "Applied Chemistry Student · Catalysis & Green Chemistry",
-        "affiliation": {
-          "@type": "CollegeOrUniversity",
-          "name": "Khatam al-Anbia University of Behbahan"
-        },
-        "url": "https://my-academic-portfolio-pearl.vercel.app/",
-        "image": "https://my-academic-portfolio-pearl.vercel.app/profile.jpg",
-        "email": "hossein9990.ir@gmail.com",
-        "knowsAbout": ["Catalysis", "Green Chemistry", "Organometallic Chemistry", "Analytical Chemistry", "Organic Chemistry"],
-        "sameAs": [
-          "https://www.linkedin.com/in/hossein-rezaei-chemistry/",
-          "https://github.com/Norbert646",
-          "https://www.researchgate.net/profile/Hossein-Rezaei-Chem"
-        ]
-      }
-    }
-  </script>
-</head>
-<body>
-  <div id="root">${appHtml}</div>
-  <noscript>
-    <div style="max-width:42rem;margin:4rem auto;padding:0 1.5rem;font-family:system-ui;line-height:1.6">
-      <h1>Hossein Rezaei</h1>
-      <p>B.Sc. Applied Chemistry, Khatam al-Anbia University of Behbahan (GPA 17.9/20). Focused on catalysis and green chemistry; applying for Master's study in Europe.</p>
-      <p>This portfolio requires JavaScript. In the meantime:</p>
-      <ul>
-        <li><a href="/cv/Hossein-Rezaei-Academic-CV.pdf">Download my academic CV (PDF)</a></li>
-        <li><a href="mailto:hossein9990.ir@gmail.com">hossein9990.ir@gmail.com</a></li>
-        <li><a href="https://www.linkedin.com/in/hossein-rezaei-chemistry/">LinkedIn</a></li>
-      </ul>
-    </div>
-  </noscript>
-</body>
-</html>`;
-
-// نوشتن فایل در dist
-const distPath = path.resolve("dist");
-if (!fs.existsSync(distPath)) {
-  fs.mkdirSync(distPath, { recursive: true });
+function log(msg) {
+  console.log(`[prerender] ${msg}`);
 }
-fs.writeFileSync(path.join(distPath, "index.html"), template);
-console.log("✅ Pre-rendered index.html created successfully!");
+
+async function buildServerBundle() {
+  log("building server bundle…");
+  await build({
+    // Deliberately independent of vite.config.ts: the client-side
+    // manualChunks/esbuild settings must not leak into the SSR bundle.
+    configFile: false,
+    plugins: [react()],
+    logLevel: "warn",
+    build: {
+      ssr: "src/entry-server.tsx",
+      outDir: SSR_OUT,
+      emptyOutDir: true,
+      // Keep CSS/asset emission off: the client build already produced them.
+      cssCodeSplit: false,
+      copyPublicDir: false,
+      rollupOptions: { output: { entryFileNames: "entry-server.js" } },
+    },
+  });
+}
+
+async function renderApp() {
+  const entry = path.join(SSR_OUT, "entry-server.js");
+  const mod = await import(pathToFileURL(entry).href);
+  if (typeof mod.render !== "function") {
+    throw new Error("entry-server.js does not export render()");
+  }
+  return mod.render();
+}
+
+async function fontPreloadTags() {
+  const assetsDir = path.join(DIST, "assets");
+  if (!existsSync(assetsDir)) return "";
+  const files = await readdir(assetsDir);
+  const tags = [];
+  for (const pattern of PRELOAD_FONTS) {
+    const file = files.find((f) => pattern.test(f));
+    if (file) {
+      tags.push(
+        `<link rel="preload" as="font" type="font/woff2" href="/assets/${file}" crossorigin />`,
+      );
+    } else {
+      log(`warning: no font matched ${pattern}`);
+    }
+  }
+  return tags.join("\n    ");
+}
+
+async function injectHtml(appHtml) {
+  const indexPath = path.join(DIST, "index.html");
+  let html = await readFile(indexPath, "utf8");
+
+  if (!html.includes(PLACEHOLDER)) {
+    throw new Error(`${PLACEHOLDER} not found in dist/index.html`);
+  }
+  html = html.replace(PLACEHOLDER, appHtml);
+
+  const preloads = await fontPreloadTags();
+  if (preloads) {
+    html = html.replace("</head>", `    ${preloads}\n  </head>`);
+  }
+
+  await writeFile(indexPath, html, "utf8");
+  log(`wrote dist/index.html (${(html.length / 1024).toFixed(1)} KiB)`);
+}
+
+async function writeSitemap() {
+  const today = new Date().toISOString().slice(0, 10);
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${SITE_URL}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
+`;
+  await writeFile(path.join(DIST, "sitemap.xml"), xml, "utf8");
+  log(`wrote dist/sitemap.xml (lastmod ${today})`);
+}
+
+async function main() {
+  if (!existsSync(path.join(DIST, "index.html"))) {
+    throw new Error("dist/index.html not found — run `vite build` first");
+  }
+
+  await buildServerBundle();
+  const appHtml = await renderApp();
+  if (!appHtml.includes("Hossein Rezaei")) {
+    throw new Error("rendered HTML looks empty — aborting");
+  }
+  await injectHtml(appHtml);
+  await writeSitemap();
+  await rm(SSR_OUT, { recursive: true, force: true });
+  log("done ✔");
+}
+
+main().catch((err) => {
+  console.error("[prerender] failed:", err);
+  process.exitCode = 1;
+});
